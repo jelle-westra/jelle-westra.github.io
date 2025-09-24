@@ -1,0 +1,8 @@
+.header {
+    text-align: center;
+}
+.links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}

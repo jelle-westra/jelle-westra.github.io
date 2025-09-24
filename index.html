@@ -1,9 +1,48 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>jelle-westra</title>
-    </head>
-    <body>
-        <p>Hello, world!</p>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jelle Westra</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/tiles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Jelle Westra</h1>
+        <div class="links">
+            <p>CV</p>
+            <p>github.com</p>
+            <p>linkedin.com</p>
+            <p>youtube.com</p>
+        </div>
+    </div>
+  <div class="main">
+    <div class="tile-container" id="tile-container"></div>
+
+    <script>
+        fetch("projects.json")
+            .then(res => res.json())
+            .then(projects => {
+                const container = document.getElementById("tile-container");
+                projects.forEach(p => {
+                const tile = document.createElement("a");
+                tile.className = "tile";
+                tile.href = `${p.root}/main.html`
+
+                tile.innerHTML = `
+                    <img src="${p.root}/thumbnail.jpg" class="tile-thumbnail" alt="">
+                    <div class="tile-content">
+                    <h3>${p.title}</h3>
+                    <p>${p.description}</p>
+                    <div class="tile-content-tags">
+                        ${p.tags.map(t => `<span class="tile-content-tag">${t}</span>`).join("")}
+                    </div>
+                    </div>
+                `;
+                container.appendChild(tile);
+            });
+      });
+    </script>
+</body>
 </html>

@@ -1,0 +1,47 @@
+.tile-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+    gap: 20px;
+    max-width: calc(3 * 250px + 2 * 20px);
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.tile {
+    border-radius: 12px;
+    background: #eee;
+    width: 250px;
+    transition: transform 0.1s ease;
+    text-decoration: none;
+    color: inherit;
+}
+.tile:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.tile-thumbnail {
+    border-radius: 12px;
+    width: 250px;
+}
+
+.tile-content {
+    margin: 12px;
+}
+.tile-content-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.tile-content-tag {
+    background-color: rgb(198, 198, 255);
+    padding: 0.5rem;
+    border-radius: 100px;
+    margin: 0;
+    line-height: 1;
+    font-size: 12px;
+}
+
+.tile-content-tag:hover {
+    transform: scale(1.03);
+}
