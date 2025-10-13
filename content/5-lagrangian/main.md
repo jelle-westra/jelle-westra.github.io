@@ -3,7 +3,7 @@ Lagrangian mechanics provides a mathematically beautiful and conceptually elegan
 
 By simply defining the energy of the system in terms of arbitrary generalized coordinates we can automatically simulate the dynamics of the system using PyTorch. It is almost like magic.
 
-> ~ Classical Mechanics, Taylor 2003: Some purists object that the Lagrangian approach makes life too easy, removing the need to think about the physics.
+> ~ Classical Mechanics, Taylor 2004: Some purists object that the Lagrangian approach makes life too easy, removing the need to think about the physics.
 
 I will give a brief interlude which is rather mathematical, feel free to skip it and check the examples. You'll find the implementation on my [GitHub](http://github.com/jelle-westra/lagrangian).
 
