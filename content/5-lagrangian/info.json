@@ -1,0 +1,5 @@
+{
+    "title": "PyTorch Lagrangian Mechanics",
+    "description": "Automated dynamics of Lagrangian systems by use of PyTorch autograd.",
+    "tags": ["pytorch", "autograd", "physics", "lagrangian", "dynamics"]
+}

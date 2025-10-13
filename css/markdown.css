@@ -47,14 +47,21 @@ blockquote {
   border-radius: 6px;
 }
 
-/* Code */
-code {
-  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+/* CodeMirror + Markdown code block styling */
+pre code {
+  display: block;
   background: #f6f8fa;
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-size: 0.95em;
+  color: #24292e;
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
 }
+
+/* make CodeMirror highlighting blend with markdown style */
+.cm-s-default span { font-family: inherit; }
 
 /* Images */
 img {
@@ -77,7 +84,7 @@ a:visited {
 }
 
 /* Embedded videos (e.g. YouTube) */
-iframe {
+iframe, video {
   display: block;
   margin: 1.5em auto;
   width: 80%;
