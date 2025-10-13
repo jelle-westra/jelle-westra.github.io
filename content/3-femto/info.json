@@ -1,0 +1,6 @@
+{
+    "title": "Femto Kickstarter",
+    "description": "A Smart Bulb with built-in Smoke and CO detectors.",
+    "tags": ["start-up", "embedded-systems", "C/C++", "app", "REST", "graphic-design", "renders"],
+    "prebuild": true
+}
