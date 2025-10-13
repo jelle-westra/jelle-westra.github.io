@@ -31,4 +31,3 @@ We devised a method for calculating the LAI accurately by transforming the 3DGS 
 Clearly, besides this LAI metric you could come up with many more metrics for monitoring the plants in your greenhouse, in fact quite literally you have a geometrical digital twin of the plant. A model like this would be invaluable for optimizing growth strategies by means of AI.
 
 ![LAI-plot](./assets/LAI-plot.png)
-![LAI-plants](./assets/LAI-plants.png)
