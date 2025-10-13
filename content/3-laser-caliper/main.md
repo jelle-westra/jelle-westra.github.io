@@ -8,6 +8,7 @@ Horticulture workers currently measure plant stems using *digital calipers*, whi
 By attaching inexpensive line lasers to a smartphone case and interfacing them via the USB port, we created a low-cost laser scanning module for smartphones (under €20). Using an Android app, structured-light techniques are applied to recover the geometric profile of the stems.
 
 This method can capture *sub-millimeter geometric features*, easily sufficient for stem measurements. Because full profiles are reconstructed, the resulting data are also more accurate and consistent than traditional "1D" caliper readings, which can be biased by the user.
+![laser-caliper-shapes](./assets/laser-caliper.jpg)
 
 My work mainly focused on:
 <ul>
