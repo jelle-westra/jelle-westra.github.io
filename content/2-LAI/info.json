@@ -1,0 +1,5 @@
+{
+    "title": "Leaf Area Index",
+    "description": "Using 3D Gaussian Splatting for estimation of LAI in greenhouses.",
+    "tags": ["paper", "3DGS", "gaussian-splating", "leaf-area-index"]
+}
