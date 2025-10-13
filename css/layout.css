@@ -5,4 +5,13 @@
     display: flex;
     gap: 1rem;
     justify-content: center;
+    margin: 12px
+}
+
+.links > a {
+  color: inherit;
+  text-decoration: underline;
+}
+.links > a:visited {
+  color: inherit;
 }
