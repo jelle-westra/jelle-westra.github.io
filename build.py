@@ -11,6 +11,7 @@ def inject_html(html_content: str, title: str) -> None :
         <meta charset="UTF-8">
         <title>{title}</title>
         <link rel="stylesheet" href="../../css/base.css">
+        <link rel="stylesheet" href="../../css/markdown.css">
         <script> <!-- Configure MathJax to process $...$ -->
             window.MathJax = {{
                 tex: {{
