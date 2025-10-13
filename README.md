@@ -1,5 +1,7 @@
 # Personal Website
 
+[jelle-westra.github.io](http://jelle-westra.github.io)
+
 A very simple static personal website written using just HTML/CSS/JS.
 The homepage shows tiles of different showcased projects.
 
