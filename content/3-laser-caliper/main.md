@@ -15,3 +15,5 @@ My work mainly focused on:
 <li>handling all mathematical aspects: deriving a simplified calibration method and performing the numerical 3D reconstruction; and</li>
 <li>guiding two students: one on hardware development and one on the app implementation.</li>
 </ul>
+
+![laser-caliper-shapes](./assets/laser-caliper-shapes.svg)
