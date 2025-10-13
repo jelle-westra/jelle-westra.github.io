@@ -36,16 +36,17 @@ def main() -> None :
         # reading project meta, to be added to projects.json
         with open(p.joinpath('info.json'), 'r') as handle : 
             info = json.load(handle)
-            info['root'] = str(p)
+            info['root'] = str(p) if not('redirect' in info) else info['redirect']
             projects.append(info)
 
-        # reading and parsing the markdown file:
-        with open(p.joinpath('main.md'), 'r') as handle :
-            md = ''.join(handle.readlines())
-        html = inject_html(markdown(md), info['title'])
-        # exporting the .html
-        with open(p.joinpath('main.html'), 'w') as handle :
-            handle.writelines(html)
+        if not('redirect' in info):
+            # reading and parsing the markdown file:
+            with open(p.joinpath('main.md'), 'r') as handle :
+                md = ''.join(handle.readlines())
+            html = inject_html(markdown(md), info['title'])
+            # exporting the .html
+            with open(p.joinpath('main.html'), 'w') as handle :
+                handle.writelines(html)
 
         print(f'[{i+1:03d}/{len(project_paths):03d}]', p.name)
 
