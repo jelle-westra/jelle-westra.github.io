@@ -39,7 +39,7 @@ def main() -> None :
             info['root'] = str(p) if not('redirect' in info) else info['redirect']
             projects.append(info)
 
-        if not('redirect' in info):
+        if not('redirect' in info) and not("prebuild" in info):
             # reading and parsing the markdown file:
             with open(p.joinpath('main.md'), 'r') as handle :
                 md = ''.join(handle.readlines())
