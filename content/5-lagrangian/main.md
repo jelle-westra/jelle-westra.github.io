@@ -12,7 +12,7 @@ This code is inspired by a post of [Magnus Ross](https://magnusross.github.io/po
 
 I will give a brief introduction which is rather mathematical, feel free to skip it and check the examples. You'll find the implementation on my [GitHub](http://github.com/jelle-westra/lagrangian). 
 
-Altough the mathematics might seem a bit intense, we can create such an exteremely powerful framework. It results us just having to define kinetic and potential energy terms to perform highly accurate simulations of complicated dynamical systems.
+Although the mathematics might seem a bit intense, we can create such an extremely powerful framework. It results us just having to define kinetic and potential energy terms to perform highly accurate simulations of complicated dynamical systems.
 
 <video 
     height="512"
@@ -39,7 +39,7 @@ $$
 
 Equations of motion for the generalized coordinates can be derived using this relation. Thanks to the maturity of autograd tools like PyTorch we can numerically calculate the generalized acceleration $\ddot{\mathbf{q}}.$
 
-> **EXAMPLE** Simple Harmonic Oscilator in terms of angle $\mathbf{q}=(\theta)$, using a small angle approximation:
+> **EXAMPLE** Simple Harmonic Oscillator in terms of angle $\mathbf{q}=(\theta)$, using a small angle approximation:
 > $$
 > T = (mR^2\dot{\theta}^2)/2;\qquad V = (mgR\theta^2)/2;\qquad\mathcal{L}=T-V
 > $$
@@ -95,7 +95,7 @@ $$
 are the generalized mass matrix, and generalized force vector respectively, looks familiar huh haha.
 
 ## Addition of Dissipative Effects
-The addition of the non-conservative disspative term $Q(\dot{q})$ is straightforward, see [Rayleigh dissipation function](https://en.wikipedia.org/wiki/Rayleigh_dissipation_function), for which we can write the Euler-Lagranage equations into:
+The addition of the non-conservative dissipative term $Q(\dot{q})$ is straightforward, see [Rayleigh dissipation function](https://en.wikipedia.org/wiki/Rayleigh_dissipation_function), for which we can write the Euler-Lagranage equations into:
 
 $$
 \frac{d}{dt}\nabla_{\dot{\mathbf{q}}}\mathcal{L} = \nabla_\mathbf{q}\mathcal{L} - \nabla_{\dot{\mathbf{q}}}Q.
@@ -146,7 +146,7 @@ $$
 \mathcal{L}^* = \mathcal{L} + \lambda g(\mathbf{q}).
 $$
 
-Substituing $\mathcal{L}^*$ for $\mathcal{L}$ results in:
+Substituting $\mathcal{L}^*$ for $\mathcal{L}$ results in:
 
 $$
 \mathbf{M}\ddot{\mathbf{q}} = \mathbf{f} + J_g^\intercal\lambda.
@@ -205,7 +205,7 @@ $$
 
 <hr>
 
-Now we can solve for our generalized acceration $\ddot{\mathbf{q}}$ and Lagrange multipliers $\lambda$ simulatenously:
+Now we can solve for our generalized acceration $\ddot{\mathbf{q}}$ and Lagrange multipliers $\lambda$ simultaneously:
 
 $$
 \begin{cases}
@@ -258,7 +258,7 @@ x = torch.linalg.solve(A, b)
 (qddot, lambdas) = (x[:self.n], x[self.n:])
 </code></pre>
 
-## Minimal Example: Simple Harmonic Oscilator (Pendulum)
+## Minimal Example: Simple Harmonic Oscillator (Pendulum)
 Let's define the energy in terms of pendulum angle $\theta$ and using a small angle approximation such that we can compare our integration using the analytical solution:
 
 $$
@@ -349,7 +349,7 @@ class ConstrainedDampedPendulum(LagrangianSolver):
         return self.m*(xdot.square() + ydot.square())/2
 
     def V(self, u: torch.Tensor) -> torch.Tensor:
-        t, x,y, xdot,xydot = u
+        t, x,y, xdot,ydot = u
         return self.m*self.g*(y + self.R)
     
     def Q(self, u: torch.Tensor) -> torch.Tensor:
@@ -372,7 +372,7 @@ Also is close with the analytical (small-angle) solution, using the constraints 
 ## Dzhanibekov Effect
 Now you will see how powerful and general this framework gets; simulating the dynamics of complicated systems will be just a matter of formulating the energy!
 
-Famously the Dzhanibekov effect is a classic example unintuitive rotational dynamics, where a rigid body in zero gravity exhibits a surprising flip around its intermediate principal axis of inertia.
+Famously the Dzhanibekov effect is a classic example counterintuitive rotational dynamics, where a rigid body in zero gravity exhibits a surprising flip around its intermediate principal axis of inertia.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1x5UiwEEvpQ?si=fFfCD5EKQ7w_fluU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -450,7 +450,7 @@ Using these we can check the if the solved Lagrange multipliers agree with the a
 
 ## Roller Coaster
 
-We have $n$ carts on a track. Where some track is defined using a paramteric definition: $x(q_i)$ and $y(q_i)$, in here $q_i(t)$ is the generalized (constrained) coordinate on the track of the $i$-th cart.
+We have $n$ carts on a track. Where some track is defined using a parametric definition: $x(q_i)$ and $y(q_i)$, in here $q_i(t)$ is the generalized (constrained) coordinate on the track of the $i$-th cart.
 
 To find the velocities in Euclidean space we have to transform from the generalized coordinates:
 $$
@@ -478,9 +478,9 @@ $$
 
 Since we have $n$ carts, this means we will have $n-1$ of such links.
 
-The track consists of a straight part that transitions into a looping. When using a piecewise definition, the transition of going from straight to looping will cause numerical instabilities which cause the constraint functions to drift. To fix this, I came up with a smooth transition function using a sigmoid function (as smoothed Heaviside) to ensure continuity of the track. It smoothly transitions the linear part into the looping.
+The track consists of a straight part that transitions into a looping. When using a piecewise-definition, the transition of going from straight to looping will cause numerical instabilities which cause the constraint functions to drift. To fix this, I came up with a smooth transition function using a sigmoid function (as smoothed Heaviside) to ensure continuity of the track. It smoothly transitions the linear part into the looping.
 
-This linear part is ensures it's easy to place the carts exactly the same distance apart. After the parameteric curve transformation, equidistant points in the generalized $q$-domain, are not necessarily equidistant anymore in $x,y$-space.
+This linear part is ensures it's easy to place the carts exactly the same distance apart. After the parametric curve transformation, equidistant points in the generalized $q$-domain, are not necessarily equidistant anymore in $x,y$-space.
 
 You might use a spline definition of the track instead, but then you have to make sure you're able to compute the gradient w.r.t. generalized coordinate $q_i$.
 
