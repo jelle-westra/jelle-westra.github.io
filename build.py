@@ -25,20 +25,15 @@ def inject_html(html_content: str, title: str) -> None :
         </script>
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script type="text/javascript">
-            window.onload = function(){
-                var codeElement = document.getElementById('python_code');
-                // Add code mirror class for coloring (default is the theme)
-                codeElement.classList.add( 'cm-s-default' );
+        window.onload = function() {
+            var codeBlocks = document.querySelectorAll('code.python_code');
+            codeBlocks.forEach(function(codeElement) {
+                codeElement.classList.add('cm-s-default');
                 var code = codeElement.innerText;
-
                 codeElement.innerHTML = "";
-
-                CodeMirror.runMode(
-                code,
-                'python',
-                codeElement
-                );
-            };
+                CodeMirror.runMode(code, 'python', codeElement);
+            });
+        };
         </script>
     </head>
     <body>
