@@ -13,7 +13,8 @@ body {
 /* Match .tile-container width */
 main, body > *:not(script):not(style) {
   max-width: calc(3 * 250px + 2 * 20px);
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Headings */
