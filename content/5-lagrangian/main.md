@@ -156,6 +156,8 @@ $$
 
 where $J_g$ is the Jacobian of $g$. 
 
+<hr>
+
 Since $g(\mathbf{q})=0$ must always hold, it's stationary, its time derivatives must be 0 as well:
 
 $$
