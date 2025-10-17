@@ -521,7 +521,7 @@ This gives us the energy of the system:
 $$
 \begin{cases}
 \displaystyle
-T = \frac{m}{2} \sum_i (\dot{x}_i^2 + \dot{y}_i^2) \\ \\
+T = \frac{m}{2} \sum_i (\dot{x}_i^2 + \dot{y}_i^2) \\\ \\\
 \displaystyle
 V = mg\sum_i y_i
 \end{cases}
