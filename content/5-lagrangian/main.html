@@ -201,7 +201,7 @@ $$</p>
 <p>$$
 \frac{d^2}{dt^2}g(\mathbf{q}) = 0
 \implies
-(J_g \ddot{\mathbf{q}})_i = \dot{\mathbf{q}}^\intercal H_{g_i} \dot{\mathbf{q}}
+(J_g \ddot{\mathbf{q}})_i = -\dot{\mathbf{q}}^\intercal H_{g_i} \dot{\mathbf{q}}
 $$</p>
 <hr>
 
@@ -209,7 +209,7 @@ $$</p>
 <p>$$
 \begin{cases}
 \mathbf{M}\ddot{\mathbf{q}} = \mathbf{f} + J_g^\intercal\lambda \\
-(J_g \ddot{\mathbf{q}})_i = \dot{\mathbf{q}}^\intercal H_{g_i} \dot{\mathbf{q}}
+(J_g \ddot{\mathbf{q}})_i = -\dot{\mathbf{q}}^\intercal H_{g_i} \dot{\mathbf{q}}
 \end{cases}
 $$</p>
 <p>which can be written as the linear system</p>
@@ -223,7 +223,7 @@ J_g &amp; 0 \\
 \end{pmatrix} = 
 \begin{pmatrix}
 \mathbf{f} \\
-\dot{\mathbf{q}}^\intercal H_g\dot{\mathbf{q}}
+-\dot{\mathbf{q}}^\intercal H_g\dot{\mathbf{q}}
 \end{pmatrix}.
 $$</p>
 <h3>PyTorch Implementation</h3>

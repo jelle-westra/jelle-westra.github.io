@@ -204,7 +204,7 @@ Plugging into the second time-derivative of $g$
 $$
 \frac{d^2}{dt^2}g(\mathbf{q}) = 0
 \implies
-(J_g \ddot{\mathbf{q}})\_i = \dot{\mathbf{q}}^\intercal H_{g_i} \dot{\mathbf{q}}
+(J_g \ddot{\mathbf{q}})\_i = -\dot{\mathbf{q}}^\intercal H_{g_i} \dot{\mathbf{q}}
 $$
 
 <hr>
@@ -214,7 +214,7 @@ Now we can solve for our generalized acceration $\ddot{\mathbf{q}}$ and Lagrange
 $$
 \begin{cases}
 \mathbf{M}\ddot{\mathbf{q}} = \mathbf{f} + J_g^\intercal\lambda \\\
-(J_g \ddot{\mathbf{q}})\_i = \dot{\mathbf{q}}^\intercal H_{g_i} \dot{\mathbf{q}}
+(J_g \ddot{\mathbf{q}})\_i = -\dot{\mathbf{q}}^\intercal H_{g_i} \dot{\mathbf{q}}
 \end{cases}
 $$
 
@@ -230,7 +230,7 @@ J_g & 0 \\\
 \end{pmatrix} = 
 \begin{pmatrix}
 \mathbf{f} \\\
-\dot{\mathbf{q}}^\intercal H_g\dot{\mathbf{q}}
+-\dot{\mathbf{q}}^\intercal H_g\dot{\mathbf{q}}
 \end{pmatrix}.
 $$
 
