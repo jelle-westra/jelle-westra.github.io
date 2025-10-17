@@ -31,6 +31,11 @@
         </script>
     </head>
     <body>
+        <header style="background:#f6f8fa; padding:0.75em 1.5em; border-bottom:1px solid #eaecef;">
+        <a href="../../index.html" style="font-size:1.2em; font-weight:600; color:#0366d6; text-decoration:none;">
+            ◄ Jelle Westra homepage
+        </a>
+        </header>
         <h1>Automated Lagrangian Mechanics using PyTorch</h1>
 <p>Lagrangian mechanics provides a mathematically beautiful and conceptually elegant framework for describing the dynamics of physical systems. Instead of focusing on forces as in Newtonian mechanics, it captures motion through an energy function. This formulation simplifies the treatment of complex systems with constraints which are traditionally hard to model using Newtonian mechanics.</p>
 <p>By simply defining the energy of the system in terms of arbitrary generalized coordinates we can automatically simulate the dynamics of the system using PyTorch. It is almost like magic.</p>
@@ -379,7 +384,7 @@ class SolarSystem(LagrangianSolver):
         return -self.G * potential
 </code></pre>
 
-<p>Initial condition is taken from the book <a href="https://link.springer.com/book/10.1007/3-540-30666-8">Geometric Numerical Integration, Ernst Haier</a>. As you can see, orbits are quite stable over the integration perios of 500 years.</p>
+<p>Initial condition is taken from the book <a href="https://link.springer.com/book/10.1007/3-540-30666-8">Geometric Numerical Integration, Ernst Haier</a>. As you can see, orbits are quite stable over the integration period of 500 years.</p>
 <video 
     height="512"
     autoplay

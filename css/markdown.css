@@ -97,3 +97,14 @@ iframe, video {
   border: none;
   border-radius: 8px;
 }
+
+header {
+  position:fixed; 
+  top:0; 
+  left:0; 
+  right:0; 
+  background:#f6f8fa; 
+  padding:0.75em 1.5em; 
+  border-bottom:1px solid #eaecef; 
+  z-index:1000;
+}

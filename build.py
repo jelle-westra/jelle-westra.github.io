@@ -37,6 +37,11 @@ def inject_html(html_content: str, title: str) -> None :
         </script>
     </head>
     <body>
+        <header style="background:#f6f8fa; padding:0.75em 1.5em; border-bottom:1px solid #eaecef;">
+        <a href="../../index.html" style="font-size:1.2em; font-weight:600; color:#0366d6; text-decoration:none;">
+            ◄ Jelle Westra homepage
+        </a>
+        </header>
         %s
     </body>
 </html>
