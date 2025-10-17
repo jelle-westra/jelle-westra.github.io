@@ -159,6 +159,8 @@ $$</p>
 \mathbf{M}\ddot{\mathbf{q}} = \mathbf{f} + J_g^\intercal\lambda.
 $$</p>
 <p>where $J_g$ is the Jacobian of $g$. </p>
+<hr>
+
 <p>Since $g(\mathbf{q})=0$ must always hold, it's stationary, its time derivatives must be 0 as well:</p>
 <p>$$
 \frac{d}{dt}g(\mathbf{q}) = 0,\quad
@@ -466,7 +468,7 @@ We can easily numerically compute the derivates $x'$ and $y'$ using PyTorch's au
 <p>$$
 \begin{cases}
 \displaystyle
-T = \frac{m}{2} \sum_i (\dot{x}_i^2 + \dot{y}_i^2) \ \
+T = \frac{m}{2} \sum_i (\dot{x}_i^2 + \dot{y}_i^2) \\ \\
 \displaystyle
 V = mg\sum_i y_i
 \end{cases}

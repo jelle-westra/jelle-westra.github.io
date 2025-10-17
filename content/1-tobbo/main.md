@@ -8,7 +8,10 @@ During my master’s thesis project, I researched the interplay between *problem
 Black-box methods offer a general framework for solving optimization problems with arbitrary objectives, geometric parameterizations, and physics models. This is in contrast to conventional, single-purpose gradient-based methods, which are not always feasible.
 
 This research was carried out using my own Python package: [tobbo](https://github.com/jelle-westra/tobbo), a framework I developed for setting up and solving TO problems with BBO (TO-BBO). If you’d like to try it yourself, check out the tutorial on the GitHub page. Below you can see the structural optimization of a cantilever using the CMA-ES method using the package.
-![demo](./assets/demo.svg)
+<video height="512" muted controls>
+    <source src="./assets/animation.mp4" type="video/mp4"/>
+    Your browser does not support the video tag.
+</video>
 
 In practice, engineers and researchers often spend significant simulation budget and time on **algorithm selection** and **hyperparameter tuning** for BBO methods, as performance can vary greatly across problems
 
