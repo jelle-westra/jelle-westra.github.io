@@ -37,12 +37,15 @@
 <blockquote>
 <p>~ Classical Mechanics, Taylor 2004: Some purists object that the Lagrangian approach makes life too easy, removing the need to think about the physics.</p>
 </blockquote>
-<p>This code is inspired by a post of <a href="https://magnusross.github.io/posts/l1/">Magnus Ross</a>, I have made the following additions/contributions:
-- addition of dissipative effects,
-- addition of holonomic constraints via automated lagrange multipliers, and
-- solving the system using a sympletic integrator to conserve energy.</p>
+<p>This code is inspired by a post of <a href="https://magnusross.github.io/posts/l1/">Magnus Ross</a>, I have made the following additions/contributions:</p>
+<ol>
+<li>addition of dissipative effects,</li>
+<li>addition of holonomic constraints via automated lagrange multipliers, and</li>
+<li>solving the system using a sympletic integrator to conserve energy.</li>
+</ol>
+
 <p>I will give a brief introduction which is rather mathematical, feel free to skip it and check the examples. You'll find the implementation on my <a href="http://github.com/jelle-westra/lagrangian">GitHub</a>. </p>
-<p>Altough the mathematics might seem a bit intense, we can create such an exteremely powerful framework. It results us just having to define kinetic and potential energy terms to perform highly accurate simulations of complicated dynamical systems.</p>
+<p>Although the mathematics might seem a bit intense, we can create such an extremely powerful framework. It results us just having to define kinetic and potential energy terms to perform highly accurate simulations of complicated dynamical systems.</p>
 <video 
     height="512"
     autoplay
@@ -51,7 +54,7 @@
     <source src="./assets/Dzhanibekov.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
-
+<p>If the video does not play, click on it to play.</p>
 <h2>Background</h2>
 <p>Often due to symmetries or constraints it is often easier to describe a physical system's energy function in terms of generalized coordinates in comparison to a Newtonian force framework. For example a rollercoaster car, contrained to the rails. The Lagrangian $\mathcal{L}$ in terms of generalized coordinate $\mathbf{q}(t)\in\mathbb{R}^n$ is defined as:</p>
 <p>$$
@@ -63,7 +66,7 @@ $$</p>
 $$</p>
 <p>Equations of motion for the generalized coordinates can be derived using this relation. Thanks to the maturity of autograd tools like PyTorch we can numerically calculate the generalized acceleration $\ddot{\mathbf{q}}.$</p>
 <blockquote>
-<p><strong>EXAMPLE</strong> Simple Harmonic Oscilator in terms of angle $\mathbf{q}=(\theta)$, using a small angle approximation:
+<p><strong>EXAMPLE</strong> Simple Harmonic Oscillator in terms of angle $\mathbf{q}=(\theta)$, using a small angle approximation:
 $$
 T = (mR^2\dot{\theta}^2)/2;\qquad V = (mgR\theta^2)/2;\qquad\mathcal{L}=T-V
 $$
@@ -109,7 +112,7 @@ $$
 $$</p>
 <p>are the generalized mass matrix, and generalized force vector respectively, looks familiar huh haha.</p>
 <h2>Addition of Dissipative Effects</h2>
-<p>The addition of the non-conservative disspative term $Q(\dot{q})$ is straightforward, see <a href="https://en.wikipedia.org/wiki/Rayleigh_dissipation_function">Rayleigh dissipation function</a>, for which we can write the Euler-Lagranage equations into:</p>
+<p>The addition of the non-conservative dissipative term $Q(\dot{q})$ is straightforward, see <a href="https://en.wikipedia.org/wiki/Rayleigh_dissipation_function">Rayleigh dissipation function</a>, for which we can write the Euler-Lagranage equations into:</p>
 <p>$$
 \frac{d}{dt}\nabla_{\dot{\mathbf{q}}}\mathcal{L} = \nabla_\mathbf{q}\mathcal{L} - \nabla_{\dot{\mathbf{q}}}Q.
 $$</p>
@@ -151,7 +154,7 @@ $$</p>
 <p>$$
 \mathcal{L}^* = \mathcal{L} + \lambda g(\mathbf{q}).
 $$</p>
-<p>Substituing $\mathcal{L}^*$ for $\mathcal{L}$ results in:</p>
+<p>Substituting $\mathcal{L}^*$ for $\mathcal{L}$ results in:</p>
 <p>$$
 \mathbf{M}\ddot{\mathbf{q}} = \mathbf{f} + J_g^\intercal\lambda.
 $$</p>
@@ -195,7 +198,7 @@ $$</p>
 $$</p>
 <hr>
 
-<p>Now we can solve for our generalized acceration $\ddot{\mathbf{q}}$ and Lagrange multipliers $\lambda$ simulatenously:</p>
+<p>Now we can solve for our generalized acceration $\ddot{\mathbf{q}}$ and Lagrange multipliers $\lambda$ simultaneously:</p>
 <p>$$
 \begin{cases}
 \mathbf{M}\ddot{\mathbf{q}} = \mathbf{f} + J_g^\intercal\lambda \\
@@ -243,7 +246,7 @@ x = torch.linalg.solve(A, b)
 (qddot, lambdas) = (x[:self.n], x[self.n:])
 </code></pre>
 
-<h2>Minimal Example: Simple Harmonic Oscilator (Pendulum)</h2>
+<h2>Minimal Example: Simple Harmonic Oscillator (Pendulum)</h2>
 <p>Let's define the energy in terms of pendulum angle $\theta$ and using a small angle approximation such that we can compare our integration using the analytical solution:</p>
 <p>$$
 \begin{cases}
@@ -266,10 +269,10 @@ class Pendulum(LagrangianSolver):
 
     def V(self, u: torch.Tensor) -> torch.Tensor:
         (t, theta, theta_dot) = u
-        return self.m * self.g * theta.square()
+        return self.m * self.g * theta.square()/2
 </code></pre>
 
-<p>We let initial condition $\theta_0=0.1$ and $\dot{\theta_0}=0$, $t\in[0,300 \textrm{ s}]$ using 30k time-steps, and let $m=R=1$. Over a long period of integration the system's energy remains stable and close to the analytical solution. Yet the solution does drift a little, at $t=300\text{ s}$ the approximated phase-sift is around $\Delta t\sim 0.01\text{ s}$.</p>
+<p>We let initial condition $\theta_0=0.1$ and $\dot{\theta_0}=0$, $t\in[0,300 \textrm{ s}]$ using 30k time-steps, and let $m=R=1$. Over a long period of integration the system's energy remains stable and close to the analytical solution. Yet the solution does drift a little, at $t=5\text{ min}$ the approximated phase-sift is around $\Delta t\sim 0.01\text{ s}$.</p>
 <p><img alt="pendulum" src="./assets/SHO.svg" /></p>
 <h2>Minimal Example: Damping and Constraints (Pendulum)</h2>
 <p>Instead of using our constrained coordinates, now we let the mass suspended, described as function of $\theta(t)$, to be directly defined by its position $(x(t),y(t))$, under the constraint:</p>
@@ -319,7 +322,7 @@ class ConstrainedDampedPendulum(LagrangianSolver):
         return self.m*(xdot.square() + ydot.square())/2
 
     def V(self, u: torch.Tensor) -> torch.Tensor:
-        t, x,y, xdot,xydot = u
+        t, x,y, xdot,ydot = u
         return self.m*self.g*(y + self.R)
 
     def Q(self, u: torch.Tensor) -> torch.Tensor:
@@ -337,9 +340,56 @@ class ConstrainedDampedPendulum(LagrangianSolver):
 
 <p>Also is close with the analytical (small-angle) solution, using the constraints here automatically does not use the small-angle approximation</p>
 <p><img alt="damped-SHO" src="./assets/damped-SHO.svg" /></p>
+<h2>The Outer Solar System</h2>
+<p>Let's consider the planets in our outer solar system (Jupiter, Saturn, Uranus, Neptune, and yes Pluto) relative to the sun. Let $\mathbf{x}_i$ denote the position of the $i$-th planet, $\dot{\mathbf{x}}_i$ its velocity, and $m_i$ its mass. Then the energy of our system:</p>
+<p>$$
+\begin{cases}
+\displaystyle
+T = \frac{1}{2}\sum_i m_i (\dot{\mathbf{x}}_i^\intercal\dot{\mathbf{x}}_i), \\
+\\
+\displaystyle
+V = -G\sum_{i=0}^n \sum_{j=0}^{i-1} \frac{m_im_j}{\|\mathbf{x}_i - \mathbf{x}_j\|}.
+\end{cases}
+$$</p>
+<p>In here $n$ is the number of planets, and $G$ denotes the gravitational constant.</p>
+<p>Index 0 denotes the sun. Since we consider our system relative to the sun, this fixes $\mathbf{x}_0(t)=0$ and $\dot{\mathbf{x}}_0(t) = 0$. Given this we can exclude them from the generalized coordinate vector in our numerical solver:</p>
+<pre><code class="python_code">@dataclass
+class SolarSystem(LagrangianSolver):
+    m: torch.Tensor # [au] masses of the planets
+    M: float # [solar mass] mass of star
+    G: float = 2.95912208286e-4 # [au3 solar_mass-1 day-2]
+
+    def __post_init__(self) : self.n_planets = len(self.m)
+
+    def T(self, u: torch.Tensor) -> torch.Tensor : 
+        x, xdot = u[1:].view(2,self.n_planets,3)
+        return (self.m * (xdot*xdot).sum(dim=1)).sum() / 2
+
+    def V(self, u: torch.Tensor) -> torch.Tensor : 
+        x, xdot = u[1:].view(2,self.n_planets,3)
+
+        potential = torch.tensor(0., dtype=torch.float64)
+        for i in range(self.n_planets):
+            potential += self.M * self.m[i] / x[i].norm()
+            for j in range(i):
+                potential += self.m[i]*self.m[j] / (x[i] - x[j]).norm()
+
+        return -self.G * potential
+</code></pre>
+
+<p>Initial condition is taken from the book <a href="https://link.springer.com/book/10.1007/3-540-30666-8">Geometric Numerical Integration, Ernst Haier</a>. As you can see, orbits are quite stable over the integration perios of 500 years.</p>
+<video 
+    height="512"
+    autoplay
+    loop
+    muted
+    <source src="./assets/outer-solar.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<p>If the video does not play, click on it to play.</p>
 <h2>Dzhanibekov Effect</h2>
 <p>Now you will see how powerful and general this framework gets; simulating the dynamics of complicated systems will be just a matter of formulating the energy!</p>
-<p>Famously the Dzhanibekov effect is a classic example unintuitive rotational dynamics, where a rigid body in zero gravity exhibits a surprising flip around its intermediate principal axis of inertia.</p>
+<p>Famously the Dzhanibekov effect is a classic example counterintuitive rotational dynamics, where a rigid body in zero gravity exhibits a surprising flip around its intermediate principal axis of inertia.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1x5UiwEEvpQ?si=fFfCD5EKQ7w_fluU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 <p>We setup the system as a bit different from the T-shape above, we have two rods connected as cross (90deg, see the video below). The rods both have length $2R$ and the intersection of the rods is placed at the origin. Rod 1 has a mass $m_1$ on both ends, and rod 2 has mass $m_2$ on both ends. The energy of the system</p>
@@ -392,7 +442,7 @@ $$</p>
     <source src="./assets/Dzhanibekov.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
-
+<p>If the video does not play, click on it to play.</p>
 <blockquote>
 <p><strong>NOTE</strong> If your initial condition is not valid, the constraints will drift; always validate the constraint and energy functions.</p>
 </blockquote>
@@ -405,7 +455,7 @@ $$</p>
 <p>Using these we can check the if the solved Lagrange multipliers agree with the analytical solution:</p>
 <p><img alt="Dzhanibekov-multipliers" src="./assets/Dzhanibekov-multipliers.svg" /></p>
 <h2>Roller Coaster</h2>
-<p>We have $n$ carts on a track. Where some track is defined using a paramteric definition: $x(q_i)$ and $y(q_i)$, in here $q_i(t)$ is the generalized (constrained) coordinate on the track of the $i$-th cart.</p>
+<p>We have $n$ carts on a track. Where some track is defined using a parametric definition: $x(q_i)$ and $y(q_i)$, in here $q_i(t)$ is the generalized (constrained) coordinate on the track of the $i$-th cart.</p>
 <p>To find the velocities in Euclidean space we have to transform from the generalized coordinates:
 $$
 \dot{x}_i = \frac{dx}{dq_i}\dot{q}_i;\qquad
@@ -426,8 +476,8 @@ $$</p>
 g_{i,{i+1}} = (x_i - x_{i+1})^2 + (y_i - y_{i+1})^2 - R^2 = 0
 $$</p>
 <p>Since we have $n$ carts, this means we will have $n-1$ of such links.</p>
-<p>The track consists of a straight part that transitions into a looping. When using a piecewise definition, the transition of going from straight to looping will cause numerical instabilities which cause the constraint functions to drift. To fix this, I came up with a smooth transition function using a sigmoid function (as smoothed Heaviside) to ensure continuity of the track. It smoothly transitions the linear part into the looping.</p>
-<p>This linear part is ensures it's easy to place the carts exactly the same distance apart. After the parameteric curve transformation, equidistant points in the generalized $q$-domain, are not necessarily equidistant anymore in $x,y$-space.</p>
+<p>The track consists of a straight part that transitions into a looping. When using a piecewise-definition, the transition of going from straight to looping will cause numerical instabilities which cause the constraint functions to drift. To fix this, I came up with a smooth transition function using a sigmoid function (as smoothed Heaviside) to ensure continuity of the track. It smoothly transitions the linear part into the looping.</p>
+<p>This linear part is ensures it's easy to place the carts exactly the same distance apart. After the parametric curve transformation, equidistant points in the generalized $q$-domain, are not necessarily equidistant anymore in $x,y$-space.</p>
 <p>You might use a spline definition of the track instead, but then you have to make sure you're able to compute the gradient w.r.t. generalized coordinate $q_i$.</p>
 <pre><code class="python_code">@dataclass
 class RollerCoaster(LagrangianSolver):
@@ -481,8 +531,6 @@ class RollerCoaster(LagrangianSolver):
     <source src="./assets/roller-coaster.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
-
-<h2>Outer Solar System</h2>
-<h2>Chain of Coupled Pendulums</h2>
+<p>If the video does not play, click on it to play.</p>
     </body>
 </html>

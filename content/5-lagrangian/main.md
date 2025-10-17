@@ -6,9 +6,11 @@ By simply defining the energy of the system in terms of arbitrary generalized co
 > ~ Classical Mechanics, Taylor 2004: Some purists object that the Lagrangian approach makes life too easy, removing the need to think about the physics.
 
 This code is inspired by a post of [Magnus Ross](https://magnusross.github.io/posts/l1/), I have made the following additions/contributions:
-- addition of dissipative effects,
-- addition of holonomic constraints via automated lagrange multipliers, and
-- solving the system using a sympletic integrator to conserve energy.
+<ol>
+<li>addition of dissipative effects,</li>
+<li>addition of holonomic constraints via automated lagrange multipliers, and</li>
+<li>solving the system using a sympletic integrator to conserve energy.</li>
+</ol>
 
 I will give a brief introduction which is rather mathematical, feel free to skip it and check the examples. You'll find the implementation on my [GitHub](http://github.com/jelle-westra/lagrangian). 
 
@@ -22,7 +24,7 @@ Although the mathematics might seem a bit intense, we can create such an extreme
     <source src="./assets/Dzhanibekov.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
-
+If the video does not play, click on it to play.
 
 ## Background
 Often due to symmetries or constraints it is often easier to describe a physical system's energy function in terms of generalized coordinates in comparison to a Newtonian force framework. For example a rollercoaster car, contrained to the rails. The Lagrangian $\mathcal{L}$ in terms of generalized coordinate $\mathbf{q}(t)\in\mathbb{R}^n$ is defined as:
@@ -283,10 +285,10 @@ class Pendulum(LagrangianSolver):
     
     def V(self, u: torch.Tensor) -> torch.Tensor:
         (t, theta, theta_dot) = u
-        return self.m * self.g * theta.square()
+        return self.m * self.g * theta.square()/2
 </code></pre>
 
-We let initial condition $\theta_0=0.1$ and $\dot{\theta_0}=0$, $t\in[0,300 \textrm{ s}]$ using 30k time-steps, and let $m=R=1$. Over a long period of integration the system's energy remains stable and close to the analytical solution. Yet the solution does drift a little, at $t=300\text{ s}$ the approximated phase-sift is around $\Delta t\sim 0.01\text{ s}$.
+We let initial condition $\theta_0=0.1$ and $\dot{\theta_0}=0$, $t\in[0,300 \textrm{ s}]$ using 30k time-steps, and let $m=R=1$. Over a long period of integration the system's energy remains stable and close to the analytical solution. Yet the solution does drift a little, at $t=5\text{ min}$ the approximated phase-sift is around $\Delta t\sim 0.01\text{ s}$.
 
 ![pendulum](./assets/SHO.svg)
 
@@ -369,6 +371,60 @@ Also is close with the analytical (small-angle) solution, using the constraints 
 
 ![damped-SHO](./assets/damped-SHO.svg)
 
+## The Outer Solar System
+
+Let's consider the planets in our outer solar system (Jupiter, Saturn, Uranus, Neptune, and yes Pluto) relative to the sun. Let $\mathbf{x}_i$ denote the position of the $i$-th planet, $\dot{\mathbf{x}}_i$ its velocity, and $m_i$ its mass. Then the energy of our system:
+
+$$
+\begin{cases}
+\displaystyle
+T = \frac{1}{2}\sum_i m_i (\dot{\mathbf{x}}\_i^\intercal\dot{\mathbf{x}}\_i), \\\
+\\\
+\displaystyle
+V = -G\sum_{i=0}^n \sum_{j=0}^{i-1} \frac{m_im_j}{\|\mathbf{x}\_i - \mathbf{x}\_j\|}.
+\end{cases}
+$$
+
+In here $n$ is the number of planets, and $G$ denotes the gravitational constant.
+
+Index 0 denotes the sun. Since we consider our system relative to the sun, this fixes $\mathbf{x}_0(t)=0$ and $\dot{\mathbf{x}}_0(t) = 0$. Given this we can exclude them from the generalized coordinate vector in our numerical solver:
+
+<pre><code class="python_code">@dataclass
+class SolarSystem(LagrangianSolver):
+    m: torch.Tensor # [au] masses of the planets
+    M: float # [solar mass] mass of star
+    G: float = 2.95912208286e-4 # [au3 solar_mass-1 day-2]
+
+    def __post_init__(self) : self.n_planets = len(self.m)
+
+    def T(self, u: torch.Tensor) -> torch.Tensor : 
+        x, xdot = u[1:].view(2,self.n_planets,3)
+        return (self.m * (xdot*xdot).sum(dim=1)).sum() / 2
+
+    def V(self, u: torch.Tensor) -> torch.Tensor : 
+        x, xdot = u[1:].view(2,self.n_planets,3)
+
+        potential = torch.tensor(0., dtype=torch.float64)
+        for i in range(self.n_planets):
+            potential += self.M * self.m[i] / x[i].norm()
+            for j in range(i):
+                potential += self.m[i]*self.m[j] / (x[i] - x[j]).norm()
+
+        return -self.G * potential
+</code></pre>
+
+Initial condition is taken from the book [Geometric Numerical Integration, Ernst Haier](https://link.springer.com/book/10.1007/3-540-30666-8). As you can see, orbits are quite stable over the integration perios of 500 years.
+
+<video 
+    height="512"
+    autoplay
+    loop
+    muted
+    <source src="./assets/outer-solar.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+If the video does not play, click on it to play.
+
 ## Dzhanibekov Effect
 Now you will see how powerful and general this framework gets; simulating the dynamics of complicated systems will be just a matter of formulating the energy!
 
@@ -433,6 +489,7 @@ $$
     <source src="./assets/Dzhanibekov.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
+If the video does not play, click on it to play.
 
 > **NOTE** If your initial condition is not valid, the constraints will drift; always validate the constraint and energy functions.
 
@@ -537,6 +594,4 @@ class RollerCoaster(LagrangianSolver):
     <source src="./assets/roller-coaster.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
-
-## Outer Solar System
-## Chain of Coupled Pendulums
+If the video does not play, click on it to play.
