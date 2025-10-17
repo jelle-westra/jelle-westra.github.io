@@ -415,7 +415,7 @@ class SolarSystem(LagrangianSolver):
         return -self.G * potential
 </code></pre>
 
-Initial condition is taken from the book [Geometric Numerical Integration, Ernst Haier](https://link.springer.com/book/10.1007/3-540-30666-8). As you can see, orbits are quite stable over the integration perios of 500 years.
+Initial condition is taken from the book [Geometric Numerical Integration, Ernst Haier](https://link.springer.com/book/10.1007/3-540-30666-8). As you can see, orbits are quite stable over the integration period of 500 years.
 
 <video 
     height="512"
