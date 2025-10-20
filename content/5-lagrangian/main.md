@@ -578,12 +578,12 @@ class RollerCoaster(LagrangianSolver):
         return self.m * ((dxdq**2 + dydq**2) * qdot.square()).sum() / 2
     
     def V(self, u: torch.Tensor) -> torch.Tensor:
-        (s, sdot) = u[1:].view(2, self.n)
-        return self.m * self.g * self.y(s).sum()
+        (q, qdot) = u[1:].view(2, self.n)
+        return self.m * self.g * self.y(q).sum()
     
     def constraints(self, u: torch.Tensor) -> torch.Tensor:
-        (s, sdot) = u[1:].view(2, self.n)
-        r2 = self.x(s).diff().square() + self.y(s).diff().square()
+        (q, qdot) = u[1:].view(2, self.n)
+        r2 = self.x(q).diff().square() + self.y(q).diff().square()
         return (r2 - self.r0**2)
 </code></pre>
 
