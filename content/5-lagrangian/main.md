@@ -14,7 +14,7 @@ This code is inspired by a post of [Magnus Ross](https://magnusross.github.io/po
 
 I will give a brief introduction which is rather mathematical, feel free to skip it and check the examples. You'll find the implementation on my [GitHub](http://github.com/jelle-westra/lagrangian). 
 
-Although the mathematics might seem a bit intense, we can create such an extremely powerful framework. It results us just having to define kinetic and potential energy terms to perform highly accurate simulations of complicated dynamical systems.
+Although the mathematics may appear intense, this framework is remarkably powerful — by simply defining the kinetic and potential energy terms, we can simulate complex dynamical systems with high accuracy.
 
 <video 
     height="512"
@@ -393,8 +393,8 @@ Index 0 denotes the sun. Since we consider our system relative to the sun, this 
 
 <pre><code class="python_code">@dataclass
 class SolarSystem(LagrangianSolver):
-    m: torch.Tensor # [au] masses of the planets
-    M: float # [solar mass] mass of star
+    m: torch.Tensor # [solar_mass] masses of the planets
+    M: float # [solar_mass] mass of star
     G: float = 2.95912208286e-4 # [au3 solar_mass-1 day-2]
 
     def __post_init__(self) : self.n_planets = len(self.m)
