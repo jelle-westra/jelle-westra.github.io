@@ -1,13 +1,11 @@
 # Parameterization vs Optimizer Selection
-> Topology Optimization of a Horizontal Cantilever
-
-> **NOTE** Evostar submission is awating review
+> Topology Optimization of a Horizontal Cantilever ([thesis](https://theses.liacs.nl/3535))
 
 During my master’s thesis project, I researched the interplay between *problem description* and **Black-Box Optimization** (BBO) procedures for **Structural Topology Optimization** (TO) problems.
 
 Black-box methods offer a general framework for solving optimization problems with arbitrary objectives, geometric parameterizations, and physics models. This is in contrast to conventional, single-purpose gradient-based methods, which are not always feasible.
 
-This research was carried out using my own Python package: [tobbo](https://github.com/jelle-westra/tobbo), a framework I developed for setting up and solving TO problems with BBO (TO-BBO). If you’d like to try it yourself, check out the tutorial on the GitHub page. Below you can see the structural optimization of a cantilever using the CMA-ES method using the package.
+This research was carried out using my own Python package: [tobbo](https://anonymous.4open.science/r/evoapplications2026/README.md), a framework I developed for setting up and solving TO problems with BBO (TO-BBO). If you’d like to try it yourself, check out the tutorial on the GitHub page. Below you can see the structural optimization of a cantilever using the CMA-ES method using the package.
 <video height="512" muted controls>
     <source src="./assets/animation.mp4" type="video/mp4"/>
     Your browser does not support the video tag.
